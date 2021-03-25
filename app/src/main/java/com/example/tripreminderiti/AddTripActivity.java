@@ -2,17 +2,23 @@ package com.example.tripreminderiti;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tripreminderiti.database.TripDatabase;
 import com.example.tripreminderiti.database.TripDatabase_Impl;
 import com.example.tripreminderiti.database.trip.Trip;
+import com.google.android.gms.common.api.Status;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.SimpleDateFormat;
@@ -93,13 +99,18 @@ public class AddTripActivity extends AppCompatActivity {
         btnAddNewTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Trip trip = new Trip(nameEd.getEditText().getText().toString(), startPointEd.getEditText().getText().toString(), endPointEd.getEditText().getText().toString(), dateEd.getEditText().getText().toString(), timeEd.getEditText().getText().toString());
-                tripDatabase.tripDao().insertTrip(trip);
+                if(validateError() == true) {
+                    Trip trip = new Trip(nameEd.getEditText().getText().toString(), startPointEd.getEditText().getText().toString(), endPointEd.getEditText().getText().toString(), dateEd.getEditText().getText().toString(), timeEd.getEditText().getText().toString());
+                    tripDatabase.tripDao().insertTrip(trip);
+                }
             }
         });
 
 
     }
+
+
+    
 
     private void updateLabel() {
         String myFormat = "MM/dd/yyyy"; //In which you need put here
@@ -109,7 +120,69 @@ public class AddTripActivity extends AppCompatActivity {
     }
 
 
+
+
+    //Mido
+    //Validation
+    private Boolean validateError() {
+        String tNameVal = nameEd.getEditText().getText().toString();
+        String spointVal = startPointEd.getEditText().getText().toString();
+        String epointVal = endPointEd.getEditText().getText().toString();
+        String dateVal = dateEd.getEditText().getText().toString();
+        String timeVal = timeEd.getEditText().getText().toString();
+        if(tNameVal.isEmpty() ){
+            nameEd.setError("TripName Required");
+            nameEd.requestFocus();
+            return false;
+        }
+        else if(spointVal.isEmpty()) {
+            startPointEd.setError("Start Point required");
+            startPointEd.requestFocus();
+
+            return false;
+        }
+        else if(epointVal.isEmpty()) {
+            endPointEd.setError("End Point required");
+            endPointEd.requestFocus();
+            return false;
+        }
+        else if(dateVal.isEmpty()) {
+            dateEd.setError("date reqquired");
+            dateEd.requestFocus();
+            return false;
+        }
+        else if(timeVal.isEmpty()) {
+            timeEd.setError("Time required");
+            timeEd.requestFocus();
+            return false;
+        }
+        else {
+            nameEd.setError(null);
+            nameEd.setErrorEnabled(false);
+
+            startPointEd.setError(null);
+            startPointEd.setErrorEnabled(false);
+
+            endPointEd.setError(null);
+            endPointEd.setErrorEnabled(false);
+
+            dateEd.setError(null);
+            dateEd.setErrorEnabled(false);
+
+            timeEd.setError(null);
+            timeEd.setErrorEnabled(false);
+
+            return true;
+        }
+
+    }
+
+
 }
+
+
+
+
 
 
         /*

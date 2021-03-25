@@ -19,6 +19,11 @@ public class UpcomingTripAdapter extends RecyclerView.Adapter<UpcomingTripAdapte
     public TripClickListener setTripClickListener = null;
     private List<Trip> data = null;
 
+    //Mido
+    public StartTrip setStartTrip = null;
+    public DeletTrip setDeletTrip = null;
+
+
     public void changeData(List<Trip> tripsData) {
         this.data = tripsData;
         notifyDataSetChanged();
@@ -56,6 +61,28 @@ public class UpcomingTripAdapter extends RecyclerView.Adapter<UpcomingTripAdapte
                 }
             });
         }
+
+
+        //Mido
+        if (setStartTrip != null) { //java is not safty
+            holder.startIv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setStartTrip.onClick(trip);
+                }
+            });
+        }
+
+
+
+        if(setDeletTrip != null){
+            holder.deleteIv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setDeletTrip.onClick(trip);
+                }
+            });
+        }
     }
 
     @Override
@@ -74,6 +101,18 @@ public class UpcomingTripAdapter extends RecyclerView.Adapter<UpcomingTripAdapte
         void onClick(Trip trip);
     }
 
+    //Mido
+    //to start trip to destinatio
+    public interface StartTrip {
+        void onClick(Trip trip);
+    }
+
+    //Mido
+    //to delete trip
+    public interface DeletTrip{
+        void onClick(Trip trip);
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView nameTv;
@@ -83,6 +122,7 @@ public class UpcomingTripAdapter extends RecyclerView.Adapter<UpcomingTripAdapte
         TextView dateTv;
         ImageView addNoteIv;
         ImageView startIv;
+        ImageView deleteIv;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -93,6 +133,7 @@ public class UpcomingTripAdapter extends RecyclerView.Adapter<UpcomingTripAdapte
             timeTv = itemView.findViewById(R.id.item_tv_time);
             addNoteIv = itemView.findViewById(R.id.item_iv_addNote);
             startIv = itemView.findViewById(R.id.item_iv_start);
+            deleteIv = itemView.findViewById(R.id.delete_trip);
         }
     }
 

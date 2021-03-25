@@ -1,7 +1,9 @@
 package com.example.tripreminderiti.ui.upcoming_trips;
 
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,6 +74,24 @@ public class UpcomingTripsFragment extends Fragment {
             }
         });
 
+
+        //Mido
+        //button to start trip
+        upcomingTripAdapter.setStartTrip =new UpcomingTripAdapter.StartTrip() {
+            @Override
+            public void onClick(Trip trip) {
+                DisplayTrack(trip.getEndPoint());
+            }
+        };
+
+        upcomingTripAdapter.setDeletTrip = new UpcomingTripAdapter.DeletTrip() {
+            @Override
+            public void onClick(Trip trip) {
+                Toast.makeText(getActivity(), "trip Deleted", Toast.LENGTH_SHORT).show();
+                TripDatabase.getInstance(getActivity()).tripDao().delete(trip);
+            }
+        };
+
     }
 
     public void showAddNoteDialog(int id) {
@@ -92,5 +112,36 @@ public class UpcomingTripsFragment extends Fragment {
 
 
         addNoteDialog.show();
+    }
+
+
+
+    //Mido
+    //to display track on map from user location to destination
+    private void DisplayTrack( String sDestination) {
+        //if device dosnt have mape installed then redirect it to play store
+
+        try {
+            //when google map installed
+            Uri uri = Uri.parse("https://www.google.co.in/maps/dir/" + "/" + sDestination);
+
+            //Action view with uri
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            intent.setPackage("com.google.android.apps.maps");
+            //set flag
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            startActivity(intent);
+
+
+        } catch (ActivityNotFoundException e) {
+            //when google map is not initialize
+            Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=com.google.android.apps.maps");
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            //set flag
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            startActivity(intent);
+        }
     }
 }

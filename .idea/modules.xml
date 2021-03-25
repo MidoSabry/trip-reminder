@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Trip_Reminder_Iti.iml" filepath="$PROJECT_DIR$/.idea/modules/Trip_Reminder_Iti.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Trip_Reminder_Iti.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Trip_Reminder_Iti.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Trip Reminder Iti.iml" filepath="$PROJECT_DIR$/Trip Reminder Iti.iml" group="Trip Reminder Iti" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="Trip Reminder Iti/app" />
     </modules>
   </component>
 </project>

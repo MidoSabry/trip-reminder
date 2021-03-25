@@ -110,7 +110,7 @@ public class AddTripActivity extends AppCompatActivity {
     }
 
 
-    
+
 
     private void updateLabel() {
         String myFormat = "MM/dd/yyyy"; //In which you need put here
